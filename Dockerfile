@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     curl \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Install setuptools first
@@ -20,4 +21,4 @@ RUN pip install -r requirements.txt
 COPY . .
 
 # Run migrations and seed the database
-CMD ["sh", "-c", "python manage.py migrate && python seed_data.py && python manage.py runserver 0.0.0.0:8000"] 
+CMD ["sh", "-c", "python manage.py migrate && python manage.py seed && python manage.py runserver 0.0.0.0:8000"] 

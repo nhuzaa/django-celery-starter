@@ -41,7 +41,7 @@ class TestProtocol(models.Model):
     version = models.CharField(max_length=20)
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='DRAFT')
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_protocols')
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='created_protocols')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     devices = models.ManyToManyField(Device, related_name='test_protocols')
@@ -63,7 +63,7 @@ class TestResult(models.Model):
 
     device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name='test_results')
     protocol = models.ForeignKey(TestProtocol, on_delete=models.CASCADE, related_name='test_results')
-    performed_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='performed_tests')
+    performed_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='performed_tests')
     status = models.CharField(max_length=20, choices=RESULT_STATUS, default='IN_PROGRESS')
     start_time = models.DateTimeField(default=timezone.now)
     end_time = models.DateTimeField(null=True, blank=True)
@@ -77,12 +77,3 @@ class TestResult(models.Model):
 
     class Meta:
         ordering = ['-created_at']
-
-@receiver(post_save, sender=TestResult)
-def notify_admin_on_test_result_creation(sender, instance, created, **kwargs):
-    """
-    Signal handler to send email notification when a new test result is created.
-    """
-    if created:
-        # Trigger the Celery task asynchronously
-        send_test_result_notification.delay(instance.id) 
