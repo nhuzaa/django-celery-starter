@@ -1,12 +1,58 @@
 from rest_framework import viewsets, permissions, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from django_filters.rest_framework import DjangoFilterBackend
+from django_filters.rest_framework import DjangoFilterBackend, FilterSet, CharFilter, ChoiceFilter, DateTimeFilter, NumberFilter
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from .models import Device, TestProtocol, TestResult
 from .serializers import DeviceSerializer, TestProtocolSerializer, TestResultSerializer
-from users.permissions import DeviceAccessPermission
+from users.permissions import DeviceAccessPermission, IsAdminUser
+
+class DeviceFilter(FilterSet):
+    name = CharFilter(lookup_expr='icontains')
+    model_number = CharFilter(lookup_expr='icontains')
+    manufacturer = CharFilter(lookup_expr='icontains')
+    description = CharFilter(lookup_expr='icontains')
+    device_type = ChoiceFilter(choices=Device.DEVICE_TYPES)
+    created_at = DateTimeFilter(lookup_expr='date')
+    updated_at = DateTimeFilter(lookup_expr='date')
+    assigned_to = NumberFilter()
+
+    class Meta:
+        model = Device
+        fields = ['name', 'model_number', 'manufacturer', 'description', 'device_type', 
+                 'created_at', 'updated_at', 'assigned_to']
+
+class TestProtocolFilter(FilterSet):
+    name = CharFilter(lookup_expr='icontains')
+    version = CharFilter(lookup_expr='icontains')
+    description = CharFilter(lookup_expr='icontains')
+    status = ChoiceFilter(choices=TestProtocol.STATUS_CHOICES)
+    created_by = NumberFilter()
+    created_at = DateTimeFilter(lookup_expr='date')
+    updated_at = DateTimeFilter(lookup_expr='date')
+    devices = NumberFilter()
+
+    class Meta:
+        model = TestProtocol
+        fields = ['name', 'version', 'description', 'status', 'created_by', 
+                 'created_at', 'updated_at', 'devices']
+
+class TestResultFilter(FilterSet):
+    device = NumberFilter()
+    protocol = NumberFilter()
+    performed_by = NumberFilter()
+    status = ChoiceFilter(choices=TestResult.RESULT_STATUS)
+    start_time = DateTimeFilter(lookup_expr='date')
+    end_time = DateTimeFilter(lookup_expr='date')
+    notes = CharFilter(lookup_expr='icontains')
+    created_at = DateTimeFilter(lookup_expr='date')
+    updated_at = DateTimeFilter(lookup_expr='date')
+
+    class Meta:
+        model = TestResult
+        fields = ['device', 'protocol', 'performed_by', 'status', 'start_time', 
+                 'end_time', 'notes', 'created_at', 'updated_at']
 
 class DeviceViewSet(viewsets.ModelViewSet):
     """
@@ -22,19 +68,20 @@ class DeviceViewSet(viewsets.ModelViewSet):
     """
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
-    permission_classes = [permissions.IsAuthenticated, DeviceAccessPermission]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser | DeviceAccessPermission]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['device_type', 'manufacturer', 'assigned_to']
-    search_fields = ['name', 'model_number', 'description']
-    ordering_fields = ['name', 'created_at', 'updated_at']
+    filterset_class = DeviceFilter
+    search_fields = ['name', 'model_number', 'manufacturer', 'description']
+    ordering_fields = ['name', 'model_number', 'manufacturer', 'device_type', 
+                      'created_at', 'updated_at', 'assigned_to']
 
     def get_queryset(self):
         """
         Filter devices based on user role:
-        - Managers see all devices
+        - Admins and Managers see all devices
         - Engineers see only their assigned devices
         """
-        if self.request.user.is_manager():
+        if self.request.user.is_staff or self.request.user.is_manager():
             return Device.objects.all()
         elif self.request.user.is_engineer():
             return Device.objects.filter(assigned_to=self.request.user)
@@ -74,11 +121,11 @@ class TestProtocolViewSet(viewsets.ModelViewSet):
     """
     queryset = TestProtocol.objects.all()
     serializer_class = TestProtocolSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser | DeviceAccessPermission]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['status', 'created_by']
+    filterset_class = TestProtocolFilter
     search_fields = ['name', 'version', 'description']
-    ordering_fields = ['name', 'created_at', 'updated_at']
+    ordering_fields = ['name', 'version', 'status', 'created_by', 'created_at', 'updated_at']
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
@@ -97,11 +144,11 @@ class TestResultViewSet(viewsets.ModelViewSet):
     """
     queryset = TestResult.objects.all()
     serializer_class = TestResultSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, IsAdminUser | DeviceAccessPermission]
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['status', 'device', 'protocol', 'performed_by']
+    filterset_class = TestResultFilter
     search_fields = ['notes', 'device__name', 'protocol__name']
-    ordering_fields = ['start_time', 'end_time', 'created_at']
+    ordering_fields = ['status', 'start_time', 'end_time', 'created_at', 'updated_at']
 
     @swagger_auto_schema(
         operation_description="Complete a test and record its results",

@@ -22,8 +22,16 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
-    path('api/', include('devices.urls')),
+    
+    # API endpoints
+    path('api/', include([
+        # Authentication endpoints
+        path('token/', obtain_auth_token, name='api_token_auth'),
+        
+        # App endpoints
+        path('users/', include('users.urls')),
+        path('devices/', include('devices.urls')),
+    ])),
     
     # Swagger and ReDoc URLs
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
