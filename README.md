@@ -14,6 +14,54 @@ graph TD
     E -->|Tasks| G[Worker]
 ```
 
+## Database Schema
+
+```mermaid
+erDiagram
+    User ||--o{ Device : "assigned_to"
+    User ||--o{ TestProtocol : "created_by"
+    User ||--o{ TestResult : "performed_by"
+    Device ||--o{ TestResult : "has"
+    TestProtocol ||--o{ TestResult : "has"
+
+    User {
+        string username
+        string email
+        boolean is_staff
+        boolean is_active
+    }
+
+    Device {
+        string name
+        string device_type
+        string model_number
+        string manufacturer
+    }
+
+    TestProtocol {
+        string name
+        string version
+        string status
+    }
+
+    TestResult {
+        string status
+        datetime start_time
+        datetime end_time
+    }
+```
+
+## User Hierarchy
+
+```mermaid
+graph TD
+    A[Admin] -->|Manages| B[Manager]
+    B -->|Supervises| C[Engineer]
+    B -->|Assigns| D[Devices]
+    C -->|Performs| E[Tests]
+    C -->|Uses| D
+```
+
 ## Components
 
 ### Backend Services
