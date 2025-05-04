@@ -1,0 +1,343 @@
+{
+	"info": {
+		"_postman_id": "vital-bio-api",
+		"name": "VitalBio API",
+		"description": "API collection for VitalBio Medical Device Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Get Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "token", ""]
+						},
+						"description": "Get authentication token for API access"
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/users/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", ""]
+						},
+						"description": "Get list of all users"
+					}
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"new_engineer\",\n    \"email\": \"engineer@vitalbio.com\",\n    \"password\": \"engineer123\",\n    \"first_name\": \"New\",\n    \"last_name\": \"Engineer\",\n    \"role\": \"ENGINEER\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", ""]
+						},
+						"description": "Create a new user"
+					}
+				},
+				{
+					"name": "Get User Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/users/1/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "users", "1", ""]
+						},
+						"description": "Get details of a specific user"
+					}
+				}
+			]
+		},
+		{
+			"name": "Devices",
+			"item": [
+				{
+					"name": "List Devices",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/devices/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "devices", ""]
+						},
+						"description": "Get list of all devices (filtered by role)"
+					}
+				},
+				{
+					"name": "Create Device",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Device\",\n    \"device_type\": \"MONITORING\",\n    \"model_number\": \"NEW-001\",\n    \"manufacturer\": \"VitalBio\",\n    \"description\": \"New monitoring device\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/devices/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "devices", ""]
+						},
+						"description": "Create a new device"
+					}
+				},
+				{
+					"name": "Get Device Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/devices/1/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "devices", "1", ""]
+						},
+						"description": "Get details of a specific device"
+					}
+				},
+				{
+					"name": "Assign Device",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"engineer_id\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/devices/1/assign/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "devices", "1", "assign", ""]
+						},
+						"description": "Assign a device to an engineer"
+					}
+				}
+			]
+		},
+		{
+			"name": "Test Protocols",
+			"item": [
+				{
+					"name": "List Protocols",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/protocols/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "protocols", ""]
+						},
+						"description": "Get list of all test protocols"
+					}
+				},
+				{
+					"name": "Create Protocol",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Protocol\",\n    \"version\": \"1.0\",\n    \"description\": \"New testing protocol\",\n    \"status\": \"DRAFT\",\n    \"devices\": [1, 2]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/protocols/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "protocols", ""]
+						},
+						"description": "Create a new test protocol"
+					}
+				},
+				{
+					"name": "Get Protocol Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/protocols/1/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "protocols", "1", ""]
+						},
+						"description": "Get details of a specific protocol"
+					}
+				}
+			]
+		},
+		{
+			"name": "Test Results",
+			"item": [
+				{
+					"name": "List Results",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/results/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "results", ""]
+						},
+						"description": "Get list of all test results"
+					}
+				},
+				{
+					"name": "Create Result",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"device\": 1,\n    \"protocol\": 1,\n    \"status\": \"PASS\",\n    \"notes\": \"Test completed successfully\",\n    \"data\": {\n        \"test_duration\": 120,\n        \"error_count\": 0\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/results/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "results", ""]
+						},
+						"description": "Create a new test result"
+					}
+				},
+				{
+					"name": "Get Result Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/results/1/",
+							"host": ["{{base_url}}"],
+							"path": ["api", "results", "1", ""]
+						},
+						"description": "Get details of a specific test result"
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "your-token-here",
+			"type": "string"
+		}
+	]
+} 
