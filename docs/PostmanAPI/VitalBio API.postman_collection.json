@@ -1,0 +1,498 @@
+{
+	"info": {
+		"_postman_id": "70d75bdb-8c21-4a99-a4df-243dff4716ca",
+		"name": "VitalBio API",
+		"description": "API collection for VitalBio Medical Device Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1931469",
+		"_collection_link": "https://galactic-resonance-3689.postman.co/workspace/PatientNow~e2c3a5bf-0500-43ba-bb46-d8c95abd8308/collection/1931469-70d75bdb-8c21-4a99-a4df-243dff4716ca?action=share&source=collection_link&creator=1931469"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Get Token Admin",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{admin_username}}\",\n    \"password\": \"{{admin_password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								""
+							]
+						},
+						"description": "Get authentication token for API access"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token Manager",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{admin_username}}\",\n    \"password\": \"{{admin_password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								""
+							]
+						},
+						"description": "Get authentication token for API access"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Token Engineer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{engineer_username}}\",\n    \"password\": \"{{engineer_password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								""
+							]
+						},
+						"description": "Get authentication token for API access"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List Users (Admin Only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/users/users/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"users",
+								""
+							]
+						},
+						"description": "Get list of all users (Admin access only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Details (Admin Only)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/users/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"1",
+								""
+							]
+						},
+						"description": "Get details of a specific user (Admin access only)"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Devices",
+			"item": [
+				{
+					"name": "List Devices",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/devices/devicelist?name=monitor&device_type=MONITORING&created_at__date=2024-05-04",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"devicelist"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "monitor"
+								},
+								{
+									"key": "device_type",
+									"value": "MONITORING"
+								},
+								{
+									"key": "created_at__date",
+									"value": "2024-05-04"
+								}
+							]
+						},
+						"description": "Get list of all devices (filtered by role)"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Devices",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Cardiac Monitor X1\",\n    \"device_type\": \"MONITORING\",\n    \"model_number\": \"CM-X1-0031\",\n    \"manufacturer\": \"VitalBio Medical\",\n    \"description\": \"Advanced cardiac monitoring device with real-time ECG analysis\",\n    \"assigned_to\": 4,\n    \"assigned_to_name\": \"Alice Engineer\",\n    \"created_at\": \"2025-05-04T00:47:58.024980Z\",\n    \"updated_at\": \"2025-05-04T00:47:58.024985Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/devices/devicelist/?name=monitor&device_type=MONITORING&created_at__date=2024-05-04",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"devicelist",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "monitor"
+								},
+								{
+									"key": "device_type",
+									"value": "MONITORING"
+								},
+								{
+									"key": "created_at__date",
+									"value": "2024-05-04"
+								}
+							]
+						},
+						"description": "Get list of all devices (filtered by role)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Device Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/devices/devicelist/1/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"devicelist",
+								"1",
+								""
+							]
+						},
+						"description": "Get details of a specific device"
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Device",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"engineer_id\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/devices/1/assign/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"1",
+								"assign",
+								""
+							]
+						},
+						"description": "Assign a device to an engineer"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Protocol",
+			"item": [
+				{
+					"name": "List Protocols",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/devices/protocols/?status=APPROVED",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"protocols",
+								""
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "APPROVED"
+								},
+								{
+									"key": "created_by",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "version",
+									"value": "1.0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get list of all test protocols"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Protocol",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"New Protocol\",\n    \"version\": \"1.0\",\n    \"description\": \"New testing protocol\",\n    \"status\": \"DRAFT\",\n    \"devices\": [1, 2]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/devices/protocols/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"protocols",
+								""
+							]
+						},
+						"description": "Create a new test protocol"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Result",
+			"item": [
+				{
+					"name": "List Results",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/devices/results/?device=1&status=PASS&start_time__date=2024-05-04",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"results",
+								""
+							],
+							"query": [
+								{
+									"key": "device",
+									"value": "1"
+								},
+								{
+									"key": "status",
+									"value": "PASS"
+								},
+								{
+									"key": "start_time__date",
+									"value": "2024-05-04"
+								}
+							]
+						},
+						"description": "Get list of all test results"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Result",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Token {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"device\": 1,\n    \"protocol\": 1,\n    \"status\": \"PASS\",\n    \"notes\": \"Test completed successfully\",\n    \"data\": {\n        \"test_duration\": 120,\n        \"error_count\": 0\n    }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/devices/results/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"devices",
+								"results",
+								""
+							]
+						},
+						"description": "Create a new test result"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "your-token-here",
+			"type": "string"
+		},
+		{
+			"key": "admin_username",
+			"value": "admin",
+			"type": "string"
+		},
+		{
+			"key": "admin_password",
+			"value": "admin123",
+			"type": "string"
+		}
+	]
+}

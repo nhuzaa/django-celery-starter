@@ -19,14 +19,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy project
 COPY . .
 
-# Fix line endings and make scripts executable
-# RUN sed -i 's/\r$//' entrypoint.sh && \
-#     sed -i 's/\r$//' init_db.sh && \
-#     chmod +x entrypoint.sh && \
-#     chmod +x init_db.sh
-
-# RUN ./entrypoint.sh
-RUN chmod +x entrypoint.sh
+RUN chmod +x init_db.sh
 RUN ./init_db.sh
 
 # Command to run the application
