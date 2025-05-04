@@ -73,6 +73,9 @@ graph TD
    # Clone the repository
    git clone  https://github.com/nhuzaa/django-celery-starter 
 
+   # Copy .env
+   cp .env.example .env
+
    # Start all services
    docker compose up --build
    ```
@@ -121,6 +124,13 @@ graph TD
    - Token-based authentication
    - JSON request/response format
    - Standard HTTP methods (GET, POST, PUT, DELETE)
+
+## Run Tests
+
+ After running the coontainers
+```
+docker compose exec backend python manage.py test devices.tests.test_views 
+```
 
 ## Components
 
