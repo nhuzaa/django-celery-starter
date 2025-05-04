@@ -6,8 +6,7 @@ A Django-based backend service for managing medical devices, test protocols, and
 
 ```mermaid
 graph TD
-    A[Frontend] -->|HTTP| B[Nginx]
-    B -->|Proxy| C[Django Backend]
+    A[Frontend] -->|REST API| C[Django Backend]
     C -->|ORM| D[PostgreSQL]
     C -->|Tasks| E[Celery]
     E -->|Queue| F[Redis]
@@ -61,6 +60,67 @@ graph TD
     C -->|Performs| E[Tests]
     C -->|Uses| D
 ```
+
+### Installation
+
+1. **Prerequisites**
+   - Docker and Docker Compose installed
+   - Git (for cloning the repository)
+   - Ports 3000, 8000, 5432 available
+
+2. **Quick Start**
+   ```bash
+   # Clone the repository
+   git clone  https://github.com/nhuzaa/django-celery-starter 
+
+   # Start all services
+   docker compose up --build
+   ```
+
+3. **Initial Setup**
+   - Database migrations run automatically
+   - Superuser is created with credentials:
+     ```
+     Username: admin
+     Password: admin123
+     ```
+   - Sample data is seeded into the database
+   - All services are configured and connected
+
+4. **Accessing the Application**
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:8000
+   - Database: localhost:5432
+   - Redis: localhost:6379
+
+### API Documentation
+
+1. **Interactive Documentation**
+   - Swagger UI: http://localhost:8000/swagger/
+     - Interactive API testing interface
+     - Request/response examples
+     - Authentication support
+     - Schema validation
+
+2. **Postman Collection**
+   - Location: `/docs/postman/`
+   - Import both collection and environment files
+   - Pre-configured requests for all endpoints
+   - Environment variables for easy switching
+
+3. **Authentication**
+   ```bash
+   # Get token
+   curl -X POST http://localhost:8000/api/token/ \
+     -H "Content-Type: application/json" \
+     -d '{"username": "admin", "password": "admin123"}'
+   ```
+
+4. **API Structure**
+   - Base URL: http://localhost:8000/api/
+   - Token-based authentication
+   - JSON request/response format
+   - Standard HTTP methods (GET, POST, PUT, DELETE)
 
 ## Components
 
