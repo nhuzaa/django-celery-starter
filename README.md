@@ -81,11 +81,8 @@ graph TD
 
    # Run migration and seed data 
    docker compose exec backend ./init_db.sh
-  ```
-   ### Go to 
-    Backend admin: http://localhost:8000/admin
-    Frontend: http://localhost:3000
-    Swagger UI: http://localhost:8000/swagger/
+
+   ```
 
 3. **Initial Setup**
    - Database migrations run automatically
@@ -98,8 +95,9 @@ graph TD
    - All services are configured and connected
 
 4. **Accessing the Application**
+   - Backend admin: http://localhost:8000/admin
    - Frontend: http://localhost:3000
-   - Backend API: http://localhost:8000
+   - Swagger UI: http://localhost:8000/swagger/
    - Database: localhost:5432
    - Redis: localhost:6379
    - Celery : when TestResult is crated 'devices/signals.py' is triggerd which queues the celery task to send out email
