@@ -95,6 +95,7 @@ graph TD
    - Backend API: http://localhost:8000
    - Database: localhost:5432
    - Redis: localhost:6379
+   - Celery : when TestResult is crated 'devices/signals.py' is triggerd which queues the celery task to send out email
 
 ### API Documentation
 

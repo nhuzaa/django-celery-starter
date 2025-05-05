@@ -1,12 +1,12 @@
 from celery import shared_task
 from django.core.mail import send_mail
 from django.conf import settings
-# from .models import TestResult
+# from devices.models import TestResult
 
 @shared_task
 def send_test_result_notification(test_result_id):
     """
-    Send an email notification when a new test result is created.
+    Send an email notification when a new test result is created. Work in progress.
     """
     try:
         # test_result = TestResult.objects.get(id=test_result_id)
