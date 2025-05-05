@@ -81,12 +81,11 @@ graph TD
 
    # Run migration and seed data 
    docker compose exec backend ./init_db.sh
-
-  # Go to 
+  ```
+   ### Go to 
     Backend admin: http://localhost:8000/admin
     Frontend: http://localhost:3000
     Swagger UI: http://localhost:8000/swagger/
-   ```
 
 3. **Initial Setup**
    - Database migrations run automatically
