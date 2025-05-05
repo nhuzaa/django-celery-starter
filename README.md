@@ -1,6 +1,6 @@
-# Vital Bio Backend
+# Vital Bio Device Test Dashboard 
 
-A Django-based backend service for managing medical devices, test protocols, and results.
+A Django-based backend service for managing medical devices, test protocols, and test results. The frontend is built with React, and Celery is integrated for handling background tasks like sending emails upon specific actions. The application is containerized using Docker, with Docker Compose for service orchestration.
 
 ## Architecture
 
