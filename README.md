@@ -78,6 +78,11 @@ graph TD
 
    # Start all services
    docker compose up --build
+
+   # Run migration and seed data 
+   docker compose exec backend ./init_db.sh
+
+
    ```
 
 3. **Initial Setup**
