@@ -138,6 +138,80 @@ graph TD
 docker compose exec backend python manage.py test devices.tests.test_views 
 ```
 
+---
+
+## Project Structure
+
+```
+vital-bio/
+├── backend/
+│   ├── config/                 # Django project settings
+│   │   ├── settings.py        # Main settings file
+│   │   ├── urls.py           # Main URL configuration
+│   │   └── wsgi.py           # WSGI configuration
+│   │
+│   ├── devices/              # Devices app
+│   │   ├── migrations/       # Database migrations
+│   │   ├── tests/           # Test files
+│   │   ├── models.py        # Device, Protocol, and Result models
+│   │   ├── serializers.py   # API serializers
+│   │   ├── views.py         # API views and viewsets
+│   │   └── urls.py          # App URL configuration
+│   │
+│   ├── users/               # Users app
+│   │   ├── migrations/      # Database migrations
+│   │   ├── models.py        # Custom user model
+│   │   ├── permissions.py   # Custom permissions
+│   │   ├── serializers.py   # User serializers
+│   │   ├── views.py         # User views
+│   │   └── urls.py          # App URL configuration
+│   │
+│   ├── manage.py            # Django management script
+│   └── requirements.txt     # Python dependencies
+│
+├── frontend/
+│   ├── public/             # Static files
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── services/       # API services
+│   │   ├── types/         # TypeScript types
+│   │   ├── App.tsx        # Main App component
+│   │   └── index.tsx      # Entry point
+│   ├── package.json        # Node.js dependencies
+│   └── tsconfig.json       # TypeScript configuration
+│
+├── docs/                   # Documentation
+│   ├── Screenshots/       # Application screenshots
+│   └── postman/          # Postman collection
+│
+├── .env.example           # Example environment variables
+├── docker-compose.yml     # Docker services configuration
+├── Dockerfile            # Backend Docker configuration
+└── README.md             # Project documentation
+```
+
+### Key Directories Explained
+
+#### Backend
+- **config/**: Contains Django project settings, URL routing, and WSGI configuration
+- **devices/**: Main app for device management, test protocols, and results
+- **users/**: Handles user authentication, roles, and permissions
+
+#### Frontend
+- **src/components/**: Reusable React components
+- **src/services/**: API integration and data fetching
+- **src/types/**: TypeScript type definitions
+
+#### Documentation
+- **docs/Screenshots/**: UI screenshots and examples
+- **docs/postman/**: API testing collections
+
+#### Configuration Files
+- **docker-compose.yml**: Defines and orchestrates all services
+- **.env.example**: Template for environment variables
+- **requirements.txt**: Python package dependencies
+
+  
 ## Components
 
 ### Backend Services
@@ -267,37 +341,37 @@ Below are some example screenshots from the application to help you visualize th
 
 ![Device List Table](docs/Screenshots/Screenshot%202025-05-04%20at%209.02.46%E2%80%AFPM.png)
 
-*This screenshot shows the main device list table in the frontend, where users can view all registered medical devices and their details.*
+*Django Admin*
 
 ---
 
 ![Device Details](docs/Screenshots/Screenshot%202025-05-04%20at%209.03.07%E2%80%AFPM.png)
 
-*This screenshot displays the details of a selected device, including its type, model number, and assigned engineer.*
+*Swagger Docs.*
 
 ---
 
 ![Test Protocols Table](docs/Screenshots/Screenshot%202025-05-04%20at%209.03.19%E2%80%AFPM.png)
 
-*This screenshot shows the list of test protocols available in the system, including their status and associated devices.*
+*React Frontend *
 
 ---
 
 ![Test Results Table](docs/Screenshots/Screenshot%202025-05-04%20at%209.03.46%E2%80%AFPM.png)
 
-*This screenshot displays the test results table, where users can review the outcome of various device tests.*
+*Postman*
 
 ---
 
 ![User Management](docs/Screenshots/Screenshot%202025-05-04%20at%209.04.06%E2%80%AFPM.png)
 
-*This screenshot shows the user management interface, where admins can view and manage user accounts and roles.*
+*Docker Desktop Containers*
 
 ---
 
 ![Dashboard Overview](docs/Screenshots/Screenshot%202025-05-04%20at%209.05.07%E2%80%AFPM.png)
 
-*This screenshot provides an overview dashboard, summarizing key metrics and recent activity in the system.*
+*Celery Signals*
 
 ---
 
@@ -309,75 +383,3 @@ For a detailed walkthrough of the application features and functionality, check 
 
 *Click the thumbnail above to watch the full demo video.*
 
----
-
-## Project Structure
-
-```
-vital-bio/
-├── backend/
-│   ├── config/                 # Django project settings
-│   │   ├── settings.py        # Main settings file
-│   │   ├── urls.py           # Main URL configuration
-│   │   └── wsgi.py           # WSGI configuration
-│   │
-│   ├── devices/              # Devices app
-│   │   ├── migrations/       # Database migrations
-│   │   ├── tests/           # Test files
-│   │   ├── models.py        # Device, Protocol, and Result models
-│   │   ├── serializers.py   # API serializers
-│   │   ├── views.py         # API views and viewsets
-│   │   └── urls.py          # App URL configuration
-│   │
-│   ├── users/               # Users app
-│   │   ├── migrations/      # Database migrations
-│   │   ├── models.py        # Custom user model
-│   │   ├── permissions.py   # Custom permissions
-│   │   ├── serializers.py   # User serializers
-│   │   ├── views.py         # User views
-│   │   └── urls.py          # App URL configuration
-│   │
-│   ├── manage.py            # Django management script
-│   └── requirements.txt     # Python dependencies
-│
-├── frontend/
-│   ├── public/             # Static files
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── services/       # API services
-│   │   ├── types/         # TypeScript types
-│   │   ├── App.tsx        # Main App component
-│   │   └── index.tsx      # Entry point
-│   ├── package.json        # Node.js dependencies
-│   └── tsconfig.json       # TypeScript configuration
-│
-├── docs/                   # Documentation
-│   ├── Screenshots/       # Application screenshots
-│   └── postman/          # Postman collection
-│
-├── .env.example           # Example environment variables
-├── docker-compose.yml     # Docker services configuration
-├── Dockerfile            # Backend Docker configuration
-└── README.md             # Project documentation
-```
-
-### Key Directories Explained
-
-#### Backend
-- **config/**: Contains Django project settings, URL routing, and WSGI configuration
-- **devices/**: Main app for device management, test protocols, and results
-- **users/**: Handles user authentication, roles, and permissions
-
-#### Frontend
-- **src/components/**: Reusable React components
-- **src/services/**: API integration and data fetching
-- **src/types/**: TypeScript type definitions
-
-#### Documentation
-- **docs/Screenshots/**: UI screenshots and examples
-- **docs/postman/**: API testing collections
-
-#### Configuration Files
-- **docker-compose.yml**: Defines and orchestrates all services
-- **.env.example**: Template for environment variables
-- **requirements.txt**: Python package dependencies
